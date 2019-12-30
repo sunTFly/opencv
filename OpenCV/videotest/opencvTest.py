@@ -109,7 +109,7 @@ def morphology():
     kernal = np.ones((5, 5), np.uint8)  # 一个卷积盒 np.uint8取 0到255整数
     imgerode = cv2.erode(img, kernal, iterations=1)  # 腐蚀操作
     imgdital = cv2.dilate(img, kernal, iterations=1)  # 膨胀操作
-    openimg = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernal)  # 开运算
+    openimg = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernal)  # 开运算 先腐蚀，再膨胀
     colsimg = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernal)  # 闭运算
     gradient = cv2.morphologyEx(img, cv2.MORPH_GRADIENT, kernal)  # 梯度运算 膨胀-腐蚀
     tophat = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, kernal)  # 顶帽 原始输入-开运算
