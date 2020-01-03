@@ -3,6 +3,10 @@ import numpy as np
 from scipy import ndimage
 
 
+'''opencv视频中 图像金字塔里有轮廓检测
+'''
+
+
 def imgshow(name, pic):
     cv2.imshow(name, pic)
     cv2.waitKey()
@@ -74,8 +78,9 @@ def contour():
     '''
      cv2.findContours(img，mode, method)  # 找出图中的轮廓值，得到的轮廓值都是嵌套格式的
     
-    参数说明:img表示输入的图片，mode表示轮廓检索模式，通常都使用RETR_TREE找出所有的轮廓值，method表示轮廓逼近方法，使用NONE表示所有轮廓都显示
-    
+    参数说明:img表示输入的图片，mode表示轮廓检索模式，通常都使用RETR_TREE找出所有的轮廓值，
+    method表示轮廓逼近方法，使用NONE表示所有轮廓都显示
+    返回结果 ：第一个值是做完2值的结果 thresh，第二个值保存的轮廓信息，最后一个返回的是层级
     '''
     image, contours, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for c in contours:
@@ -89,7 +94,6 @@ def contour():
         x, y, w, h = cv2.boundingRect(c)
         '''
         参数解释
-    
     第一个参数：img是原图
     第二个参数：（x，y）是矩阵的左上点坐标
     第三个参数：（x+w，y+h）是矩阵的右下点坐标
@@ -194,3 +198,5 @@ maxRadius：半径的最大大小（以像素为单位）。
         cv2.circle(planets, (i[0], i[1]), 2, (0, 0, 255), 3)
     imgshow('p', planets)
 
+
+contour()

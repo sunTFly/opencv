@@ -141,5 +141,38 @@ def edge():
     img2 = cv2.Canny(img, 80, 150)
     img3 = cv2.Canny(img, 30, 90)
     imgall = np.hstack((img1, img2, img3))
-    img4=cv2.threshold()
+    img4 = cv2.threshold()
     shouimg("f", imgall)
+
+
+# 图像金字塔
+def pyramid():
+    img = cv2.imread('./img/xj.jpg')
+    imgUp = cv2.pyrUp(img)
+    imgDown = cv2.pyrDown(img)
+    shouimg('img', img)
+    shouimg('up', imgUp)
+    shouimg('down', imgDown)
+    # 拉普拉斯金字塔 原始图像减去一次下采样一次上采样的结果
+    down = cv2.pyrDown(img)
+    down_up = cv2.pyrUp(down)
+    l = img - down_up
+    shouimg('l', l)
+
+
+# 模板匹配
+def matchTemplate():
+    img = cv2.imread('./img/cjml.jpg', 0)
+    face = cv2.imread('./img/jb1.png', 0)
+    imgbgr = cv2.imread('./img/cjml.jpg')
+    w, h = face.shape[0:2]
+    # 参数说明：模板匹配.png
+    res = cv2.matchTemplate(img, face, cv2.TM_CCOEFF_NORMED)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+    loc = np.where(res >= 0.5)
+    for pt in zip(*loc[::-1]):
+        cv2.rectangle(imgbgr, pt, (pt[0] + w, pt[1] + h), (0, 255, 0), 2)
+    shouimg('a', imgbgr)
+
+
+matchTemplate()
